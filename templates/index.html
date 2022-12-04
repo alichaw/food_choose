@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入jQuery包用于使用ajax-->
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="static\style.css">
+  	<!--<script defer src="static\script.js"></script>-->
+    <title>Document</title>
+</head>
+<body class="ball">
+	<div class="container">
+		<h1>請輸入你的地標和範圍</h1>
+		<!--創建兩個input輸入框，定義id分別為name,age-->
+		<input type="text" id="name" name="name" placeholder="地點">
+		<br>
+		<input type="text" id="age" name="age" placeholder="範圍">
+		<br>
+		<!--創建button按鈕，點擊則激發submit()事件-->
+		<button class="button-59" id="myBtn" onclick="submit();">提交</button>
+	</div>
+	<!-- Trigger/Open The Modal -->
+	<!--<button id="myBtn">Open Modal</button>-->
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<p id="rest_name">Some text in the Modal..</p>
+		<a class="button-59" id="rest_url" href="">Google maps</a>
+	</div>
+	
+</div>
+    <script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+        /*在這里撰寫submit()事件*/
+        function submit() {
+            $.ajax({
+                url: "submit", /*資料提交到submit處*/
+                type: "GET",  /*采用POST方法提交*/
+                data: { "name": $("#name").val(),"age":$("#age").val()},  /*提交的資料（json格式），從輸入框中獲取*/
+                /*result為后端函式回傳的json*/
+                success: function (result) {
+                    if (result.message == "success!") {
+                        alert(result.message+"你要吃"+result.name+",URL是"+result.age)
+						document.getElementById("rest_name").textContent = result.name;
+						document.getElementById("rest_url").href = result.age;
+						modal.style.display = "block";
+                    }
+                    else {
+                        alert(result.message)
+                    }
+                }
+            });
+        }
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+		}
+		// Some random colors
+const colors = ["#3CC157", "#2AA7FF", "#1B1B1B", "#FCBC0F", "#F85F36"];
+
+const numBalls = 50;
+const balls = [];
+
+for (let i = 0; i < numBalls; i++) {
+  let ball = document.createElement("div");
+  ball.classList.add("ball");
+  ball.style.background = colors[Math.floor(Math.random() * colors.length)];
+  ball.style.left = `${Math.floor(Math.random() * 100)}vw`;
+  ball.style.top = `${Math.floor(Math.random() * 100)}vh`;
+  ball.style.transform = `scale(${Math.random()})`;
+  ball.style.width = `${Math.random()}em`;
+  ball.style.height = ball.style.width;
+  
+  balls.push(ball);
+  document.body.append(ball);
+}
+
+// Keyframes
+balls.forEach((el, i, ra) => {
+  let to = {
+    x: Math.random() * (i % 2 === 0 ? -11 : 11),
+    y: Math.random() * 12
+  };
+
+  let anim = el.animate(
+    [
+      { transform: "translate(0, 0)" },
+      { transform: `translate(${to.x}rem, ${to.y}rem)` }
+    ],
+    {
+      duration: (Math.random() + 1) * 2000, // random duration
+      direction: "alternate",
+      fill: "both",
+      iterations: Infinity,
+      easing: "ease-in-out"
+    }
+  );
+});
+
+    </script>
+</body>
+</html>
