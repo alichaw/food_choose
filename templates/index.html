@@ -54,7 +54,7 @@
                 /*result為后端函式回傳的json*/
                 success: function (result) {
                     if (result.message == "success!") {
-                        alert(result.message+"你要吃"+result.name+",URL是"+result.age)
+                        //alert(result.message+"你要吃"+result.name+",URL是"+result.age)
 						document.getElementById("rest_name").textContent = result.name;
 						document.getElementById("rest_url").href = result.age;
 						modal.style.display = "block";
