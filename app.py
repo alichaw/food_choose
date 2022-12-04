@@ -84,4 +84,4 @@ def submit():
         return {'message':"success!",'name':output.name,'age':output.url}
 if __name__ == '__main__':
     #定義app在8080埠運行
-    app.run(host="localhost",port=8000,debug=True)
+    app.run(host="0.0.0.0",port=3000,debug=True)
